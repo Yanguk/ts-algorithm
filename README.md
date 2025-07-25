@@ -60,3 +60,49 @@ console.log(queue.isEmpty()); // true
 
 - 내부적으로 단일 연결 리스트를 사용하여 enqueue/dequeue 연산이 효율적으로 동작합니다.
 - 모든 연산은 상수 시간에 처리됩니다.
+
+---
+
+### 우선순위 큐(Priority Queue)
+
+이진 힙(Binary Heap) 기반의 우선순위 큐 자료구조입니다. 각 요소는 `priority` 속성을 가지고, 작은 값일수록 높은 우선순위를 가집니다. 커스텀 비교 함수도 지원합니다.
+
+#### 사용 예시
+
+```ts
+import { createPriorityQueue, reverseComparator } from "ts-data-structures";
+
+// 기본: 최소 힙 (priority가 낮을수록 먼저 나옴)
+const pq = createPriorityQueue<{ value: string; priority: number }>();
+pq.enqueue({ value: "task1", priority: 2 });
+pq.enqueue({ value: "task2", priority: 1 });
+console.log(pq.dequeue()); // { value: "task2", priority: 1 }
+
+// 최대 힙 사용 예시
+const maxPq = createPriorityQueue<{ value: string; priority: number }>(
+  [],
+  reverseComparator,
+);
+maxPq.enqueue({ value: "task1", priority: 2 });
+maxPq.enqueue({ value: "task2", priority: 1 });
+console.log(maxPq.dequeue()); // { value: "task1", priority: 2 }
+```
+
+#### API
+
+- `enqueue(value: T): void` — 값을 큐에 추가합니다.
+- `dequeue(): T | undefined` — 가장 높은 우선순위 값을 제거하고 반환합니다. 비어있으면 `undefined` 반환.
+- `size(): number` — 큐의 요소 개수를 반환합니다.
+- `peek(): T | undefined` — 가장 높은 우선순위 값을 제거하지 않고 반환합니다. 비어있으면 `undefined` 반환.
+- `isEmpty(): boolean` — 큐가 비어있으면 `true`, 아니면 `false` 반환.
+
+#### 시간 복잡도
+
+- `enqueue`, `dequeue`: O(log n)
+- `peek`, `isEmpty`, `size`: O(1)
+
+#### 참고
+
+- 이진 힙(Binary Heap)으로 구현되어 효율적입니다.
+- 커스텀 비교 함수(comparator)를 파라미터로 전달하여 최소 힙, 최대 힙 등 다양한 우선순위 기준 사용이 가능합니다.
+- reverseComparator를 사용하면 최대 힙을 쉽게 만들 수 있습니다.
