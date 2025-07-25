@@ -8,40 +8,48 @@ export const createQueue = <T>() => {
   let tail: Node<T> | null = null;
   let length = 0;
 
+  const enqueue = (value: T) => {
+    const newNode: Node<T> = { value, next: null };
+
+    if (!tail) {
+      head = tail = newNode;
+    } else {
+      tail.next = newNode;
+      tail = newNode;
+    }
+
+    length++;
+  };
+
+  const dequeue = () => {
+    const targetNode = head;
+
+    if (!targetNode) {
+      return;
+    }
+
+    const targetValue = targetNode.value;
+    const nextHead = targetNode.next;
+
+    head = nextHead;
+    length--;
+
+    if (!head) {
+      tail = null;
+    }
+
+    return targetValue;
+  };
+
+  const size = () => length;
+  const peek = () => head?.value;
+  const isEmpty = () => !!length;
+
   return {
-    enqueue: (value: T) => {
-      const newNode: Node<T> = { value, next: null };
-
-      if (!tail) {
-        head = tail = newNode;
-      } else {
-        tail.next = newNode;
-        tail = newNode;
-      }
-
-      length++;
-    },
-    dequeue: () => {
-      const targetNode = head;
-
-      if (!targetNode) {
-        return;
-      }
-
-      const targetValue = targetNode.value;
-      const nextHead = targetNode.next;
-
-      head = nextHead;
-      length--;
-
-      if (!head) {
-        tail = null;
-      }
-
-      return targetValue;
-    },
-    size: () => length,
-    peek: () => head?.value,
-    isEmpty: () => !!length,
+    enqueue,
+    dequeue,
+    size,
+    peek,
+    isEmpty,
   };
 };
