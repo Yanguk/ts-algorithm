@@ -19,7 +19,7 @@ export const createPriorityQueue = <T extends { priority: number }>(
     const parentItem = queue[parent];
 
     if (targetItem && parentItem) {
-      if (comparator(targetItem, parentItem) >= 0) {
+      if (comparator(targetItem, parentItem) < 0) {
         swap(idx, parent);
 
         percolateUp(parent);
@@ -34,24 +34,24 @@ export const createPriorityQueue = <T extends { priority: number }>(
       return;
     }
 
-    const leftIdx = (2 * idx + 1) << 1;
-    const rightIdx = leftIdx + 1;
+    const leftChildIdx = (idx << 1) + 1;
+    const rightChildIdx = leftChildIdx + 1;
 
-    const leftItem = queue[leftIdx];
-    const rightItem = queue[rightIdx];
+    const leftChildItem = queue[leftChildIdx];
+    const rightChildItem = queue[rightChildIdx];
 
     const smallestChildIdx =
-      leftItem && rightItem
-        ? comparator(leftItem, rightItem) < 0
-          ? leftIdx
-          : rightIdx
-        : leftItem
-          ? leftIdx
+      leftChildItem !== undefined && rightChildItem !== undefined
+        ? comparator(leftChildItem, rightChildItem) < 0
+          ? leftChildIdx
+          : rightChildIdx
+        : leftChildItem
+          ? leftChildIdx
           : null;
 
-    const smallestChild = smallestChildIdx && queue[smallestChildIdx];
+    const smallestChild = smallestChildIdx !== null && queue[smallestChildIdx];
 
-    if (smallestChild && comparator(targetItem, smallestChild) > 0) {
+    if (smallestChild && comparator(smallestChild, targetItem) < 0) {
       swap(idx, smallestChildIdx);
       percolateDown(smallestChildIdx);
     }
@@ -62,7 +62,13 @@ export const createPriorityQueue = <T extends { priority: number }>(
     percolateUp(queue.length - 1);
   };
 
+  const isEmpty = () => queue.length === 0;
+
   const dequeue = () => {
+    if (isEmpty()) {
+      return;
+    }
+
     swap(0, queue.length - 1);
 
     const targetItem = queue.pop();
@@ -76,8 +82,6 @@ export const createPriorityQueue = <T extends { priority: number }>(
 
   const peek = () => queue[0];
 
-  const isEmpty = () => queue.length === 0;
-
   array.forEach((item) => enqueue(item));
 
   return {
@@ -88,3 +92,6 @@ export const createPriorityQueue = <T extends { priority: number }>(
     peek,
   };
 };
+
+export const reverseComparator = <T extends { priority: number }>(a: T, b: T) =>
+  b.priority - a.priority;

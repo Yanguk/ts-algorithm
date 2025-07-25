@@ -43,7 +43,7 @@ export const createQueue = <T>() => {
 
   const size = () => length;
   const peek = () => head?.value;
-  const isEmpty = () => !!length;
+  const isEmpty = () => !length;
 
   return {
     enqueue,
