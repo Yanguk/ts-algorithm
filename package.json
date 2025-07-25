@@ -2,8 +2,12 @@
   "name": "ts-data-structures",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "test": "bun test"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "^1.2.19"
   },
   "peerDependencies": {
     "typescript": "^5"
