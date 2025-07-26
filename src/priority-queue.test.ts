@@ -16,6 +16,37 @@ test("should enqueue and dequeue in priority order (min-heap)", () => {
   expect(minPq.isEmpty()).toBe(true);
 });
 
+test("should handle negative priorities correctly (min-heap)", () => {
+  const pq = createPriorityQueue([
+    { value: "minus five", priority: -5 },
+    { value: "zero", priority: 0 },
+    { value: "minus ten", priority: -10 },
+    { value: "plus three", priority: 3 },
+  ]);
+  expect(pq.dequeue()?.value).toBe("minus ten");
+  expect(pq.dequeue()?.value).toBe("minus five");
+  expect(pq.dequeue()?.value).toBe("zero");
+  expect(pq.dequeue()?.value).toBe("plus three");
+  expect(pq.isEmpty()).toBe(true);
+});
+
+test("should handle negative priorities correctly (max-heap)", () => {
+  const pq = createPriorityQueue(
+    [
+      { value: "minus five", priority: -5 },
+      { value: "zero", priority: 0 },
+      { value: "minus ten", priority: -10 },
+      { value: "plus three", priority: 3 },
+    ],
+    reverseComparator,
+  );
+  expect(pq.dequeue()?.value).toBe("plus three");
+  expect(pq.dequeue()?.value).toBe("zero");
+  expect(pq.dequeue()?.value).toBe("minus five");
+  expect(pq.dequeue()?.value).toBe("minus ten");
+  expect(pq.isEmpty()).toBe(true);
+});
+
 test("should work with custom comparator for max-heap", () => {
   const maxPq = createPriorityQueue(
     [
@@ -60,7 +91,7 @@ test("should handle a large number of items efficiently and in correct order", (
 
   const items = Array.from({ length: size }, (_, i) => ({
     value: i,
-    priority: Math.floor(Math.random() * size),
+    priority: Math.floor(Math.random() * (2 * size)) - size,
   }));
 
   const pq = createPriorityQueue<{ value: number; priority: number }>(items);

@@ -62,10 +62,8 @@ export const createPriorityQueue = <T extends { priority: number }>(
     percolateUp(queue.length - 1);
   };
 
-  const isEmpty = () => queue.length === 0;
-
   const dequeue = () => {
-    if (isEmpty()) {
+    if (queue.length === 0) {
       return;
     }
 
@@ -78,11 +76,11 @@ export const createPriorityQueue = <T extends { priority: number }>(
     return targetItem;
   };
 
-  const size = () => queue.length;
-
-  const peek = () => queue[0];
-
   array.forEach((item) => enqueue(item));
+
+  const size = () => queue.length;
+  const peek = () => queue[0];
+  const isEmpty = () => queue.length === 0;
 
   return {
     enqueue,
