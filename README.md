@@ -106,3 +106,44 @@ console.log(maxPq.dequeue()); // { value: "task1", priority: 2 }
 - 이진 힙(Binary Heap)으로 구현되어 효율적입니다.
 - 커스텀 비교 함수(comparator)를 파라미터로 전달하여 최소 힙, 최대 힙 등 다양한 우선순위 기준 사용이 가능합니다.
 - reverseComparator를 사용하면 최대 힙을 쉽게 만들 수 있습니다.
+
+---
+
+### 데크(Deque)
+
+양방향 연결 리스트로 구현된 간단한 데크 자료구조입니다. 큐와 달리 양쪽 끝에서 삽입/삭제가 모두 가능합니다.
+
+#### 사용 예시
+
+```ts
+import { createDeque } from "ts-data-structures";
+
+const deque = createDeque<number>();
+deque.pushFront(2);
+deque.pushBack(3);
+deque.pushFront(1);
+
+console.log(deque.front()); // 1
+console.log(deque.back()); // 3
+console.log(deque.popFront()); // 1
+console.log(deque.popBack()); // 3
+```
+
+#### API
+
+- `pushFront(value: T): void` — 값을 맨 앞에 추가합니다.
+- `pushBack(value: T): void` — 값을 맨 뒤에 추가합니다.
+- `popFront(): T | undefined` — 맨 앞의 값을 제거하고 반환합니다. 비어있으면 `undefined` 반환.
+- `popBack(): T | undefined` — 맨 뒤의 값을 제거하고 반환합니다. 비어있으면 `undefined` 반환.
+- `front(): T | undefined` — 맨 앞의 값을 제거하지 않고 반환합니다. 비어있으면 `undefined` 반환.
+- `back(): T | undefined` — 맨 뒤의 값을 제거하지 않고 반환합니다. 비어있으면 `undefined` 반환.
+
+#### 시간 복잡도
+
+- `pushFront`, `pushBack`, `popFront`, `popBack`: O(1)
+- `front`, `back`: O(1)
+
+#### 참고
+
+- 양방향 연결 리스트로 구현되어 양쪽 끝에서 상수 시간에 삽입/삭제할 수 있습니다.
+- 모든 연산은 상수 시간에 처리됩니다.

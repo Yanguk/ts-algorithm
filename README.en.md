@@ -107,3 +107,44 @@ console.log(maxPq.dequeue()); // { value: "task1", priority: 2 }
 - Implemented as a binary heap for efficiency.
 - You can pass a custom comparator function to change priority rules (e.g., min-heap, max-heap).
 - Use `reverseComparator` for an easy max-heap implementation.
+
+---
+
+### Deque
+
+A simple double-ended queue (deque) data structure implemented as a doubly linked list. Unlike a queue, insertions and deletions are allowed at both ends.
+
+#### Usage
+
+```ts
+import { createDeque } from "ts-data-structures";
+
+const deque = createDeque<number>();
+deque.pushFront(2);
+deque.pushBack(3);
+deque.pushFront(1);
+
+console.log(deque.front()); // 1
+console.log(deque.back()); // 3
+console.log(deque.popFront()); // 1
+console.log(deque.popBack()); // 3
+```
+
+#### API
+
+- `pushFront(value: T): void` — Add an item to the front of the deque.
+- `pushBack(value: T): void` — Add an item to the back of the deque.
+- `popFront(): T | undefined` — Remove and return the item at the front. Returns `undefined` if empty.
+- `popBack(): T | undefined` — Remove and return the item at the back. Returns `undefined` if empty.
+- `front(): T | undefined` — Return the item at the front without removing it. Returns `undefined` if empty.
+- `back(): T | undefined` — Return the item at the back without removing it. Returns `undefined` if empty.
+
+#### Time Complexity
+
+- `pushFront`, `pushBack`, `popFront`, `popBack`: O(1)
+- `front`, `back`: O(1)
+
+#### Note
+
+- Deque is implemented using a doubly linked list for efficient O(1) operations at both ends.
+- All operations are performed in constant time.
