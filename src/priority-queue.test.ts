@@ -1,4 +1,4 @@
-import { createPriorityQueue, reverseComparator } from "./priority-queque";
+import { createPriorityQueue, reverseComparator } from "./priority-queue";
 import { expect, test } from "bun:test";
 
 test("should enqueue and dequeue in priority order (min-heap)", () => {

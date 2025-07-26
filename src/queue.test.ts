@@ -1,4 +1,4 @@
-import { createQueue } from "./queque";
+import { createQueue } from "./queue";
 import { expect, test } from "bun:test";
 
 test("enqueue & size", () => {
