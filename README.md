@@ -1,4 +1,4 @@
-# ts-data-structures
+# ts-algorithm
 
 > 🇰🇷 한국어 버전은 [README.md](./README.ko.md)에서 확인할 수 있습니다.
 
