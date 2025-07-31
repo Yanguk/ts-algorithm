@@ -1,4 +1,4 @@
-# ts-data-structures
+# ts-algorithm
 
 ## 개발
 
