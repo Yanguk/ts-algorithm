@@ -1,5 +1,5 @@
 {
-  "name": "ts-data-structures",
+  "name": "ts-algorithm",
   "module": "index.ts",
   "type": "module",
   "scripts": {
