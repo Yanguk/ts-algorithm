@@ -25,3 +25,8 @@ for coding testing
 - dequeue
 - queue
 - priority-queue
+
+## algorithm
+
+### String
+- kmp
