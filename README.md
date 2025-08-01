@@ -20,7 +20,7 @@ bun run test
 
 for coding testing
 
-## data-structuers
+## data-structures
 
 - dequeue
 - queue
