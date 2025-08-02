@@ -1,4 +1,4 @@
-import { createDeque } from "./dequeu";
+import { createDeque } from "./dequeue";
 import { expect, test } from "bun:test";
 
 test("pushFront, pushBack, front, back", () => {
