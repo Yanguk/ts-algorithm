@@ -24,6 +24,8 @@ js로 코딩테스트 준비하기 위함
 - queue
 - priority-queue
 
+- segment-tree
+
 ## 알고리즘
 
 ### 문자열

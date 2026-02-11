@@ -13,6 +13,7 @@ export const createPriorityQueue = <T extends { priority: number }>(
 
   // *percolate: 거슬러가다.
   const percolateUp = (idx: number) => {
+    // 5 -> 2, 6 - 2
     const parent = (idx - 1) >> 1;
 
     const targetItem = queue[idx];
@@ -34,6 +35,7 @@ export const createPriorityQueue = <T extends { priority: number }>(
       return;
     }
 
+    // 2 -> 5, 6
     const leftChildIdx = (idx << 1) + 1;
     const rightChildIdx = leftChildIdx + 1;
 

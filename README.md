@@ -26,6 +26,8 @@ for coding testing
 - queue
 - priority-queue
 
+- segment-tree
+
 ## algorithm
 
 ### String

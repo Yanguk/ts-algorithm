@@ -1,15 +1,20 @@
+const range = (start: number, end: number) =>
+  Array.from({ length: end - start }, (_, idx) => idx + start);
+
 const makeKmpTable = (pattern: string): number[] => {
   const table = Array.from<number>({ length: pattern.length }).fill(0);
 
   let j = 0;
 
-  for (let i = 1; i < pattern.length; i++) {
+  for (const i of range(1, pattern.length)) {
     while (j > 0 && pattern[i] !== pattern[j]) {
       j = table[j - 1] ?? 0;
     }
 
     if (pattern[i] === pattern[j]) {
-      table[i] = ++j;
+      j += 1;
+
+      table[i] = j;
     }
   }
 
@@ -23,7 +28,7 @@ export const kmpSearch = (text: string, pattern: string): number[] => {
 
   let j = 0;
 
-  for (let i = 0; i < text.length; i++) {
+  for (const i of range(0, text.length)) {
     while (j > 0 && text[i] !== pattern[j]) {
       j = kmpTable[j - 1] ?? 0;
     }
@@ -41,5 +46,3 @@ export const kmpSearch = (text: string, pattern: string): number[] => {
 
   return result;
 };
-
-kmpSearch("abacaaba", "abacaaba");
