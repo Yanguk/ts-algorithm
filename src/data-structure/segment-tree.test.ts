@@ -1,58 +1,51 @@
 import { describe, expect, it } from "bun:test";
-import { createSegmentTree } from "./segment-tree";
+import { createLazySegmentTree } from "./segment-tree";
 
-describe("SegmentTree", () => {
-  describe("Sum Operation", () => {
+describe("LazySegmentTree", () => {
+  it("should correctly build and query range sums", () => {
     const data = [1, 2, 3, 4, 5];
-    const sum = (a: number, b: number) => a + b;
-    const tree = createSegmentTree(data, sum, 0);
+    const tree = createLazySegmentTree(data);
 
-    it("should correctly query ranges", () => {
-      expect(tree.query(0, 5)).toBe(15);
-      expect(tree.query(0, 3)).toBe(6);
-      expect(tree.query(2, 5)).toBe(12);
-      expect(tree.query(1, 4)).toBe(9);
-    });
-
-    it("should correctly update values", () => {
-      tree.update(2, 10); // [1, 2, 10, 4, 5]
-      expect(tree.query(0, 5)).toBe(22);
-      expect(tree.query(2, 3)).toBe(10);
-      expect(tree.query(1, 4)).toBe(16);
-    });
-
-    it("should handle invalid ranges", () => {
-      expect(tree.query(5, 5)).toBe(0);
-      expect(tree.query(3, 2)).toBe(0);
-    });
+    expect(tree.query(0, 4)).toBe(15);
+    expect(tree.query(0, 2)).toBe(6);
+    expect(tree.query(2, 4)).toBe(12);
+    expect(tree.query(1, 3)).toBe(9);
   });
 
-  describe("Min Operation", () => {
-    const data = [5, 2, 8, 1, 9];
-    const min = (a: number, b: number) => Math.min(a, b);
-    const tree = createSegmentTree(data, min, Infinity);
+  it("should correctly handle point updates", () => {
+    const data = [1, 2, 3, 4, 5];
+    const tree = createLazySegmentTree(data);
 
-    it("should correctly query min in ranges", () => {
-      expect(tree.query(0, 5)).toBe(1);
-      expect(tree.query(0, 3)).toBe(2);
-      expect(tree.query(2, 5)).toBe(1);
-    });
-
-    it("should correctly update and query min", () => {
-      tree.update(3, 10); // [5, 2, 8, 10, 9]
-      expect(tree.query(0, 5)).toBe(2);
-      expect(tree.query(2, 5)).toBe(8);
-    });
+    tree.update(2, 10); // [1, 2, 10, 4, 5]
+    expect(tree.query(2, 2)).toBe(10);
+    expect(tree.query(0, 4)).toBe(22);
+    expect(tree.query(1, 3)).toBe(16);
   });
 
-  describe("String concatenation Operation", () => {
-    const data = ["a", "b", "c"];
-    const concat = (a: string, b: string) => a + b;
-    const tree = createSegmentTree(data, concat, "");
+  it("should correctly handle range updates", () => {
+    const data = [1, 2, 3, 4, 5];
+    const tree = createLazySegmentTree(data);
 
-    it("should correctly query string ranges", () => {
-      expect(tree.query(0, 3)).toBe("abc");
-      expect(tree.query(1, 3)).toBe("bc");
-    });
+    tree.updateRange(1, 3, 10); // [1, 12, 13, 14, 5]
+    expect(tree.query(0, 4)).toBe(45);
+    expect(tree.query(1, 4)).toBe(44);
+    expect(tree.query(1, 3)).toBe(39);
+    expect(tree.query(1, 1)).toBe(12);
+    expect(tree.query(2, 2)).toBe(13);
+    expect(tree.query(3, 3)).toBe(14);
+    expect(tree.query(0, 0)).toBe(1);
+    expect(tree.query(4, 4)).toBe(5);
+  });
+
+  it("should correctly handle consecutive range updates", () => {
+    const data = [1, 2, 3, 4, 5];
+    const tree = createLazySegmentTree(data);
+
+    tree.updateRange(0, 2, 5); // [6, 7, 8, 4, 5]
+    tree.updateRange(2, 4, 10); // [6, 7, 18, 14, 15]
+
+    expect(tree.query(0, 4)).toBe(60);
+    expect(tree.query(2, 2)).toBe(18);
+    expect(tree.query(1, 3)).toBe(39);
   });
 });
